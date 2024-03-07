@@ -1,32 +1,66 @@
-type Hourly {
-  apparent_temperature: [Float]
-  is_day: [Int]
-  precipitation_probability: [Int]
-  rain: [Float]
-  relative_humidity_2m: [Int]
-  showers: [Float]
-  snowfall: [Int]
-  temperature_2m: [Float]
-  time: [DateTime]
-  uv_index: [Float]
-  uv_index_clear_sky: [Float]
+type Current {
+  apparent_temperature: Float
+  interval: Int
+  is_day: Int
+  precipitation: Int
+  rain: Int
+  relative_humidity_2m: Int
+  showers: Int
+  snowfall: Int
+  temperature_2m: Int
+  time: DateTime
+  wind_speed_10m: Float
 }
 
-type HourlyUnits {
+type CurrentUnits {
   apparent_temperature: String
+  interval: String
   is_day: String
-  precipitation_probability: String
+  precipitation: String
   rain: String
   relative_humidity_2m: String
   showers: String
   snowfall: String
   temperature_2m: String
   time: String
-  uv_index: String
-  uv_index_clear_sky: String
+  wind_speed_10m: String
+}
+
+type Daily {
+  temperature_2m_max: [Float]
+  temperature_2m_min: [Float]
+  time: [Date]
+  weather_code: [Int]
+}
+
+type DailyUnits {
+  temperature_2m_max: String
+  temperature_2m_min: String
+  time: String
+  weather_code: String
+}
+
+type Hourly {
+  apparent_temperature: [Float]
+  dew_point_2m: [Float]
+  relative_humidity_2m: [Int]
+  temperature_2m: [Float]
+  time: [DateTime]
+}
+
+type HourlyUnits {
+  apparent_temperature: String
+  dew_point_2m: String
+  relative_humidity_2m: String
+  temperature_2m: String
+  time: String
 }
 
 type Root {
+  current: Current
+  current_units: CurrentUnits
+  daily: Daily
+  daily_units: DailyUnits
   elevation: Int
   generationtime_ms: Float
   hourly: Hourly
@@ -40,6 +74,8 @@ type Root {
 
 type Query {
   myQuery(
+    current: String
+    daily: String
     hourly: String
     latitude: String
     longitude: String

@@ -100,7 +100,10 @@ const WeatherPage = ({ params: { city, lat, long } }: Props) => {
     }, [city, lat, long]);
 
     return (
-        <div>Welcome to {city} </div>
+        <div className="flex flex-col min-h-screen md:flex-row">
+            {/* Information Panel */}
+            <div>Welcome to {city} </div>
+        </div>
     )
 }
 

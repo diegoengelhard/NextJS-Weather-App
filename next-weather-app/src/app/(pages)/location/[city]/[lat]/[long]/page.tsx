@@ -1,7 +1,6 @@
 'use client';
-import React, { useEffect, useState } from 'react'
-import { getClient } from '@/apollo-client';
-import FETCH_WEATHER from '@/graphql/queries/fetchWeather.queries';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 // Define params props
 type Props = {
@@ -12,40 +11,93 @@ type Props = {
     }
 }
 
-const WeatherPage = ({ params: { city, lat, long } }: Props) => {
-    const client = getClient();
+// Define env variables
+const API_URI = process.env.NEXT_PUBLIC_API_URI;
+const STEPZEN_KEY = process.env.NEXT_PUBLIC_STEPZEN_KEY;
 
-    const [weatherData, setWeatherData] = useState<Root | null>(null);
-    const [loading, setLoading] = useState(false);
+const WeatherPage = ({ params: { city, lat, long } }: Props) => {
+    const [weatherData, setWeatherData] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
-            setLoading(true);
             try {
-                const response = await client.query({
-                    query: FETCH_WEATHER,
+                const response = await axios.post(API_URI || '', {
+                    query: `
+                        query myQuery($current_weather: String, $daily: String = "weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,uv_index_max,uv_index_clear_sky_max,sunrise,sunset", $hourly: String = "weathercode,temperature_2m,apparent_temperature,precipitation_probability,precipitation,rain,windgusts_10m,uv_index,uv_index_clear_sky,snowfall,snow_depth,showers,relativehumidity_2m", $latitude: String!, $longitude: String!, $timezone: String!) {
+                            myQuery(
+                            current_weather: $current_weather
+                            daily: $daily
+                            hourly: $hourly
+                            latitude: $latitude
+                            longitude: $longitude
+                            timezone: $timezone
+                            ) {
+                            current_weather {
+                                interval
+                                is_day
+                                temperature
+                                time
+                                weathercode
+                                winddirection
+                                windspeed
+                            }
+                            daily {
+                                apparent_temperature_max
+                                apparent_temperature_min
+                                sunrise
+                                sunset
+                                temperature_2m_max
+                                temperature_2m_min
+                                time
+                                uv_index_clear_sky_max
+                                uv_index_max
+                                weathercode
+                            }
+                            hourly {
+                                apparent_temperature
+                                precipitation
+                                precipitation_probability
+                                rain
+                                relativehumidity_2m
+                                showers
+                                snow_depth
+                                snowfall
+                                temperature_2m
+                                time
+                                uv_index
+                                uv_index_clear_sky
+                                windgusts_10m
+                            }
+                            latitude
+                            longitude
+                            timezone
+                            timezone_abbreviation
+                            utc_offset_seconds
+                            }
+                        }
+                    `,
                     variables: {
+                        current_weather: "true",
                         latitude: lat,
                         longitude: long,
-                        timezone: 'GMT'
+                        timezone: "GMT",
+                    }
+                }, {
+                    headers: {
+                        'Authorization': `apikey ${STEPZEN_KEY}`,
+                        'Content-Type': 'application/json'
                     }
                 });
-                console.log(response);
-                if (!response || !response.data) {
-                    throw new Error('No data returned from query');
-                }
 
-                const result: Root = response.data.myQuery;
-                console.log(result);
-
-                setLoading(false);
+                console.log('Response:', response.data.data.myQuery);
+                // setWeatherData(response.data.data.myQuery);
             } catch (error) {
-                console.log(error);
-                setLoading(false);
+                console.log('Error fetching data:', error);
             }
-        }
+        };
+
         fetchData();
-    }, [lat, long]);
+    }, [city, lat, long]);
 
     return (
         <div>Welcome to {city} </div>

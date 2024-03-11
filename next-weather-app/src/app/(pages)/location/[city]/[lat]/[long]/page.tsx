@@ -130,9 +130,9 @@ const WeatherPage = ({ params: { city, lat, long } }: Props) => {
                         'Content-Type': 'application/json'
                     }
                 });
-
-                console.log('Response:', response.data.data.myQuery);
-                setWeatherData(response.data.data.myQuery);
+                const formattedData = response.data.data.myQuery;
+                console.log('Response:', formattedData);
+                setWeatherData(formattedData);
                 setLoading(false);
             } catch (error) {
                 setLoading(false);
@@ -167,7 +167,7 @@ const WeatherPage = ({ params: { city, lat, long } }: Props) => {
                                 <CalloutCard message='This is where GPT summary will go.' />
                             </div> */}
                             <div className='grid grid-cols-1 xl:grid-cols-2 gap-5 m-2'>
-                                <StatCard 
+                                <StatCard
                                     title='Temperature'
                                     metric={`${weatherData?.current_weather?.temperature.toFixed(1)}°`}
                                     color='yellow'

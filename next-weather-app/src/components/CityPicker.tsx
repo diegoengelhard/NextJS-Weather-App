@@ -79,6 +79,7 @@ const CityPicker = () => {
                     <label htmlFor="country">Country</label>
                 </div>
                 <Select
+                id="country-select"
                     className='text-black'
                     value={selectedCountry}
                     onChange={handleSelectedCountry}
@@ -98,6 +99,7 @@ const CityPicker = () => {
                         <label htmlFor="city">City</label>
                     </div>
                     <Select
+                    id="city-select"
                         className='text-black'
                         value={selectedCity}
                         onChange={handleSelectedCity}

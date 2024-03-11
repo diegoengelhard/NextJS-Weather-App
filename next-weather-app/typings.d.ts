@@ -80,8 +80,6 @@ interface Root {
     utc_offset_seconds: number;
 }
 
-
-
 interface QueryResult {
     myQuery: Root;
 }

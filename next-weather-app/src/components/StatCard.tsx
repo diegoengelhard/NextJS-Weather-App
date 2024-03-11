@@ -1,5 +1,6 @@
 import React from 'react'
-import { Card, Metric, Text, Color } from '@tremor/react';
+import { Metric, Text, Color } from '@tremor/react';
+import Card from '@/components/Card';
 
 interface StatCardProps {
     title: string;
@@ -20,11 +21,11 @@ const colorClasses: { [key: string]: string } = {
 const StatCard = ({ title, metric, color }: StatCardProps) => {
     return (
         <>
-            <div className="shadow-md rounded-md p-4 relative w-full">
+            <Card>
                 <div className={`absolute top-0 left-0 w-full h-2 ${colorClasses[color]}`}></div>
                 <Text>{title}</Text>
                 <Metric>{metric}</Metric>
-            </div>
+            </Card>
         </>
     )
 }

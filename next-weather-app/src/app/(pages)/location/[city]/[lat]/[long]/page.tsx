@@ -205,6 +205,15 @@ const WeatherPage = ({ params: { city, lat, long } }: Props) => {
                                 </div>
                             </div>
                         </div>
+
+                        <hr className='mb-5' />
+
+                        {/* Charts */}
+                        <div className='space-y-3'>
+                            {/* Temp Chart */}
+                            {/* Rain Chart */}
+                            {/* Humidity Chart */}
+                        </div>
                     </div>
                 </div>
             )}

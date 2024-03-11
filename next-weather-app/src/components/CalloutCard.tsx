@@ -1,5 +1,5 @@
 import React from 'react';
-import { Callout } from '@tremor/react';
+import Card from '@/components/Card';
 
 interface CalloutCardProps {
     message: string;
@@ -22,18 +22,18 @@ const CalloutCard = ({ message, warning }: CalloutCardProps) => {
     return (
         <>
             <div className='mt-4'>
-            {warning ? (
-                <div className="bg-red-100 p-4 shadow-md rounded-md flex">
-                    <ExclamationIcon />
-                    <p className="text-base font-medium text-red-700">{message}</p>
-                </div>
-            ) : (
-                <div className="bg-green-200 p-4 shadow-md rounded-md flex">
-                    <CheckCircleIcon />
-                    <p className="text-lg font-medium text-green-800">{message}</p>
-                </div>
+                {warning ? (
+                    <Card className='flex bg-red-100'>
+                        <ExclamationIcon />
+                        <p className="text-base font-medium text-red-700">{message}</p>
+                    </Card>
+                ) : (
+                    <Card className='flex bg-green-200'>
+                        <CheckCircleIcon />
+                        <p className="text-lg font-medium text-green-800">{message}</p>
+                    </Card>
 
-            )}
+                )}
             </div>
         </>
     )

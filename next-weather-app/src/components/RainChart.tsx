@@ -23,7 +23,7 @@ const RainChart = ({ result }: RainChartProps) => {
 
     // Combining hourly and daily data
     const data = daily?.time.map((time, index) => ({
-        time,
+        time: new Date(time).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
         precipitation: hourly.precipitation[index],
         precipitation_probability: hourly.precipitation_probability[index],
         rain: hourly.rain[index],

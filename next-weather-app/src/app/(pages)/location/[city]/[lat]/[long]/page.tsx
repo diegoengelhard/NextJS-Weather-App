@@ -160,25 +160,20 @@ const WeatherPage = ({ params: { city, lat, long } }: Props) => {
                         <div className='p-4'>
                             <div className='pb-5'>
                                 <h2 className='text-xl font-bold'>Todays Overview</h2>
-                                {/* <p className='text-sm text-gray-400'>
-                                    Last Updated at:{' '}
-                                    {new Date(weatherData.current_weather.time).toLocaleString()} (
-                                    {weatherData.timezone})
-                                </p> */}
+                                <div className='m-2 '>
+                                <CalloutCard message={`Successfully obtained data from ${decodeURI(city)}.`}/>
                             </div>
-                            {/* <div className='m-2 mb-10'>
-                                <CalloutCard message='This is where GPT summary will go.' />
-                            </div> */}
+                            </div>
                             <div className='grid grid-cols-1 xl:grid-cols-2 gap-5 m-2'>
                                 <StatCard
                                     title='Temperature'
-                                    metric={`${weatherData?.current_weather?.temperature.toFixed(1)}°`}
+                                    metric={`${weatherData?.current_weather?.temperature.toFixed(1)}°C`}
                                     color='yellow'
                                 />
 
                                 <StatCard
                                     title='Minimum Temperature'
-                                    metric={`${weatherData?.daily?.temperature_2m_min[0].toFixed(1)}°`}
+                                    metric={`${weatherData?.daily?.temperature_2m_min[0].toFixed(1)}°C`}
                                     color='green'
                                 />
                                 <div>

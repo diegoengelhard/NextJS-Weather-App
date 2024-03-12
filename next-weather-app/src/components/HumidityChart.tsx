@@ -19,7 +19,7 @@ const HumidityChart = ({ result }: HumidityChartProps) => {
 
     // Combining hourly and daily data
     const data = daily?.time.map((time, index) => ({
-        time,
+        time: new Date(time).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
         relativehumidity_2m: hourly.relativehumidity_2m[index],
     }));
 

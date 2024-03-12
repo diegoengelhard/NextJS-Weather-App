@@ -2,6 +2,7 @@ import React from 'react';
 import CityPicker from '@/components/CityPicker';
 import Image from 'next/image';
 import weatherCodeToString, { WeatherCode } from '@/lib/weatherCodeToString';
+import * as SunCalc from 'suncalc';
 
 // Define params props
 
@@ -13,6 +14,26 @@ interface InformationPanelProps {
 }
 
 const InformationPanel = ({ city, lat, long, result }: InformationPanelProps) => {
+    const times = SunCalc.getTimes(new Date(), parseFloat(lat), parseFloat(long));
+
+    // Function to convert hours to 12-hour format
+    function to12HourFormat(hours: number): number {
+        return (hours + 11) % 12 + 1; // Add 11 to handle midnight (0 becomes 11)
+    }
+
+    // Function to add leading zero if minutes are less than 10
+    function addLeadingZero(num: number): string {
+        return (num < 10 ? '0' : '') + num;
+    }
+
+    const sunriseHours: number = to12HourFormat(times.sunrise.getHours());
+    const sunriseMinutes: string = addLeadingZero(times.sunrise.getMinutes());
+    const sunsetHours: number = to12HourFormat(times.sunset.getHours());
+    const sunsetMinutes: string = addLeadingZero(times.sunset.getMinutes());
+
+    const sunriseStr: string = sunriseHours + ':' + sunriseMinutes;
+    const sunsetStr: string = sunsetHours + ':' + sunsetMinutes;
+
     return (
         <div className='bg-gradient-to-br from-[#394F68] to-[#183B7E] text-white p-10'>
             {/* Selected City */}
@@ -54,33 +75,28 @@ const InformationPanel = ({ city, lat, long, result }: InformationPanelProps) =>
 
             {/* Weather Information */}
             <div className='flex items-center justify-between'>
-                {/* <div>
+                <div className='flex items-center justify-between'>
                     <Image
-                        src={`https://www.weatherbit.io/static/img/icons/${weatherCodeToString(
-                            result?.current_weather?.weathercode as WeatherCode
-                        )?.icon
-                            }.png`}
+                        src={
+                            `https://www.weatherbit.io/static/img/icons/${weatherCodeToString(result?.current_weather?.weathercode as WeatherCode)?.icon}.png`
+                        }
                         alt={
-                            weatherCodeToString(
-                                result?.current_weather?.weathercode as WeatherCode
-                            )!.label
+                            weatherCodeToString(result?.current_weather?.weathercode as WeatherCode)?.label || ''
                         }
                         width={75}
                         height={75}
                     />
-                    <div className='flex items-center justify-between space-x-10'>
+                    <div className='flex items-center justify-between space-x-24'>
                         <p className='text-6xl font-semibold'>
                             {result?.current_weather?.temperature.toFixed(1)}°C
                         </p>
                         <p className='text-right font-extralight'>
                             {
-                                weatherCodeToString(
-                                    result?.current_weather?.weathercode as WeatherCode
-                                )?.label
+                                weatherCodeToString(result?.current_weather?.weathercode as WeatherCode)?.label
                             }
                         </p>
                     </div>
-                </div> */}
+                </div>
             </div>
 
             {/* Sunrise & Sunset */}
@@ -92,11 +108,7 @@ const InformationPanel = ({ city, lat, long, result }: InformationPanelProps) =>
                     <div className='flex-1 flex justify-between items-center'>
                         <p className='font-extralight'>Sunrise</p>
                         <p className='uppercase text-2xl'>
-                            {new Date(result?.daily?.sunrise[0]).toLocaleTimeString('en-US', {
-                                hour: 'numeric',
-                                minute: 'numeric',
-                                hour12: true,
-                            })}
+                            {`${sunriseStr} AM`}
                         </p>
                     </div>
                 </div>
@@ -108,11 +120,7 @@ const InformationPanel = ({ city, lat, long, result }: InformationPanelProps) =>
                     <div className='flex-1 flex justify-between items-center'>
                         <p className='font-extralight'>Sunset</p>
                         <p className='uppercase text-2xl'>
-                            {new Date(result?.daily?.sunset[0]).toLocaleTimeString('en-US', {
-                                hour: 'numeric',
-                                minute: 'numeric',
-                                hour12: true,
-                            })}
+                            {`${sunsetStr} PM`}
                         </p>
                     </div>
                 </div>

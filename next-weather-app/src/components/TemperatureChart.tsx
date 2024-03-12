@@ -15,9 +15,9 @@ interface TempChartProps {
 const TemperatureChart = ({ result }: TempChartProps) => {
     const { daily } = result;
 
-    // Extracting data
+    // Extracting data and formatting dates
     const data = daily?.time.map((time, index) => ({
-        time,
+        time: new Date(time).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
         temperature: daily.temperature_2m_max[index],
         uvIndex: daily.uv_index_max[index],
     }));

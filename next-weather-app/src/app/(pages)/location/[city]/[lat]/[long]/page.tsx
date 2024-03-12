@@ -6,6 +6,7 @@ import InformationPanel from '@/components/InformationPanel';
 import StatCard from '@/components/StatCard';
 import CalloutCard from '@/components/CalloutCard';
 import Spinner from '@/components/Spinner';
+import TemperatureChart from '@/components/TemperatureChart';
 
 // Define params props
 type Props = {
@@ -211,6 +212,7 @@ const WeatherPage = ({ params: { city, lat, long } }: Props) => {
                         {/* Charts */}
                         <div className='space-y-3'>
                             {/* Temp Chart */}
+                            <TemperatureChart result={weatherData} />
                             {/* Rain Chart */}
                             {/* Humidity Chart */}
                         </div>

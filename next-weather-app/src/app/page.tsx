@@ -9,7 +9,7 @@ export default function Home() {
       <Card className="bg-white text-gray-500 rounded-lg max-w-4xl mx-auto">
         <Text className="text-6xl  font-bold text-center mb-10">Weather AI</Text>
         <Subtitle className="text-xl text-center">
-          Powered by Next.js 13.4, Tailwind CSS, Tremor 2.0, Open-Meteo API +
+          Powered by Next.js 13.4, Tailwind CSS, Recharts, Open-Meteo API +
           More!
         </Subtitle>
         <Divider className="my-10 bg-gray-200" />

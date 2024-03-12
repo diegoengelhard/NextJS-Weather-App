@@ -8,6 +8,7 @@ import CalloutCard from '@/components/CalloutCard';
 import Spinner from '@/components/Spinner';
 import TemperatureChart from '@/components/TemperatureChart';
 import RainChart from '@/components/RainChart';
+import HumidityChart from '@/components/HumidityChart';
 
 // Define params props
 type Props = {
@@ -217,6 +218,7 @@ const WeatherPage = ({ params: { city, lat, long } }: Props) => {
                             {/* Rain Chart */}
                             <RainChart result={weatherData} />
                             {/* Humidity Chart */}
+                            <HumidityChart result={weatherData} />
                         </div>
                     </div>
                 </div>

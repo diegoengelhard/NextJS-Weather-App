@@ -39,7 +39,7 @@ const InformationPanel = ({ city, lat, long, result }: InformationPanelProps) =>
                         })}
                     </p>
                     <p className='font-extralight'>
-                        Timezone: {Intl.DateTimeFormat().resolvedOptions().timeZone}
+                        Your Timezone: {Intl.DateTimeFormat().resolvedOptions().timeZone}
                     </p>
                 </div>
                 <p className='text-xl font-bold uppercase'>
